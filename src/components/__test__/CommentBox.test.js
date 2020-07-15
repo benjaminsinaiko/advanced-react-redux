@@ -18,21 +18,21 @@ it('has a text area and a button', () => {
   expect(wrapper.find('button').length).toEqual(1);
 });
 
-it('has a text area that users can type in', () => {
-  // pass value property to synthetic event
-  wrapper.find('textarea').simulate('change', { target: { value: 'test comment' } });
-  // force CommentBox component to update after change
-  wrapper.update();
+describe('the text area', () => {
+  beforeEach(() => {
+    // pass value property to synthetic event
+    wrapper.find('textarea').simulate('change', { target: { value: 'test comment' } });
+    // force CommentBox component to update after change
+    wrapper.update();
+  });
 
-  expect(wrapper.find('textarea').prop('value')).toEqual('test comment');
-});
+  it('has a text area that users can type in', () => {
+    expect(wrapper.find('textarea').prop('value')).toEqual('test comment');
+  });
 
-it('will clear textarea after submit', () => {
-  wrapper.find('textarea').simulate('change', { target: { value: 'test comment' } });
-  wrapper.update();
-  expect(wrapper.find('textarea').prop('value')).toEqual('test comment');
-
-  wrapper.find('form').simulate('submit');
-  wrapper.update();
-  expect(wrapper.find('textarea').prop('value')).toEqual('');
+  it('will clear textarea after submit', () => {
+    wrapper.find('form').simulate('submit');
+    wrapper.update();
+    expect(wrapper.find('textarea').prop('value')).toEqual('');
+  });
 });
