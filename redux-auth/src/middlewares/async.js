@@ -1,13 +1,3 @@
-// REDUX MIDDLE WARE STRUCTURE
-// export default function ({ dispatch }) {
-//   return function (next) {
-//     return function (action) {
-//       //
-//     };
-//   };
-// }
-
-// REFACTOR MIDDLEWARE
 export default ({ dispatch }) => (next) => (action) => {
   // Check to see if the action has a promise in payload
   // If yes, then wait for it to resolve
@@ -16,4 +6,13 @@ export default ({ dispatch }) => (next) => (action) => {
   if (!action.payload || !action.payload.then) {
     return next(action);
   }
+
+  // Wait for the promise to resolve
+  // Get data and create new action
+  // Dispatch new action
+
+  action.payload.then(function (response) {
+    const newAction = { ...action, payload: response };
+    dispatch(newAction);
+  });
 };
