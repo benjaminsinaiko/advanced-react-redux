@@ -3,7 +3,7 @@ export default ({ dispatch }) => (next) => (action) => {
   // If yes, then wait for it to resolve
   // If no, send action to next middleware
 
-  if (!action.payload || !action.payload.then) {
+  if (!(action.payload instanceof Promise)) {
     return next(action);
   }
 
