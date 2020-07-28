@@ -11,6 +11,7 @@ const app = express();
 mongoose.connect('mongodb://localhost:auth/auth', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
 // App setup

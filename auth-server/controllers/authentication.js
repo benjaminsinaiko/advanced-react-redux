@@ -10,6 +10,10 @@ exports.signup = function (req, res, next) {
       return next(err);
     }
 
+    if (!email || !password) {
+      return res.status(422).send({ error: 'You must provide email and password' });
+    }
+
     // If user exists, return error
     if (existingUser) {
       return res.status(422).send({ error: 'Email is in use' });
