@@ -15,7 +15,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
   // Check for user id in database
   // If user, call done with user
   // If no user, call done without user object
-  User.findById(payload.subdomains, function (err, user) {
+  User.findById(payload.sub, function (err, user) {
     if (err) {
       return done(err, false);
     }
