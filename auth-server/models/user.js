@@ -14,6 +14,9 @@ userSchema.pre('save', function (next) {
   // get access to User model
   const user = this;
 
+  // only hash the password if it has been modified (or is new)
+  if (!user.isModified('password')) return next();
+
   // generate a salt, then run callback
   bcrypt.genSalt(10, function (err, salt) {
     if (err) {
@@ -32,6 +35,16 @@ userSchema.pre('save', function (next) {
     });
   });
 });
+
+userSchema.methods.comparePassword = function (candidatePassword, callback) {
+  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+    if (err) {
+      return callback(err);
+    }
+
+    callback(null, isMatch);
+  });
+};
 
 // Create model class
 const ModelClass = mongoose.model('user', userSchema);
