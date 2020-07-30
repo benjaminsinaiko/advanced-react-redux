@@ -1,5 +1,11 @@
 import React from 'react';
+import Header from './Header';
 
-export default function App() {
-  return <div>Hi, I'm the App</div>;
+export default function App({ children }) {
+  return (
+    <div>
+      <Header />
+      {children}
+    </div>
+  );
 }
