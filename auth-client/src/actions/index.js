@@ -14,6 +14,19 @@ export const signup = (formProps, callback) => async (dispatch) => {
   }
 };
 
+export const signin = (formProps, callback) => async (dispatch) => {
+  try {
+    const response = await axios.post('http://localhost:3090/signin', formProps);
+
+    const userToken = response.data.token;
+    dispatch({ type: AUTH_USER, payload: userToken });
+    localStorage.setItem('token', userToken);
+    callback();
+  } catch (err) {
+    dispatch({ type: AUTH_ERROR, payload: 'Invalid login credentials' });
+  }
+};
+
 export const signout = () => {
   localStorage.removeItem('token');
 
